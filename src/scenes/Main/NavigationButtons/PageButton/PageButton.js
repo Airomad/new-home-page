@@ -65,21 +65,26 @@ export default class PageButton extends Component {
 
     hide = () => this.changeViewState('HIDDEN');
 
+    hideFocused = () => this.changeViewState('HIDDEN_FOCUSED');
+
     moveToCircle = () => this.changeViewState('DESTINATION_CIRCLE', 1000);
 
     moveToCenter = () => this.changeViewState('DESTINATION_CENTER', 1000);
 
+    focus = () => this.changeViewState('FOCUSED');
+
     render() {
       const { viewState, transitionTime } = this.state;
-      const { circlePosition } = this.props;
+      const { circlePosition, onClick } = this.props;
 
       return (
-        <Wrapper
+        <WrapperButton
+          onClick={() => viewState === 'DESTINATION_CIRCLE' ? onClick(circlePosition) : null}
           nextCSS={transitionStyles(circlePosition)[viewState]}
           transitionTime={transitionTime}
         >
           <IconContainer icon={iconSet[circlePosition]} />
-        </Wrapper>
+        </WrapperButton>
       );
     }
 }
@@ -118,25 +123,53 @@ const POINTS_POS = [
 const transitionStyles = circlePosition => ({
   DESTINATION_CENTER: `
     opacity: 0;
+    position: absolute;
     box-shadow: 0px 0px 150px rgba(0, 0, 0, 0);
+    left: ${Config.WINDOW_WIDTH / 2 - wrapperSide / 2}px;
+    top: ${Config.WINDOW_HEIGHT / 2 - wrapperSide / 2}px;
   `,
   DESTINATION_CIRCLE: `
     opacity: 1;
+    position: absolute;
     left: ${POINTS_POS[circlePosition].x}px;
     top: ${POINTS_POS[circlePosition].y}px;
     box-shadow: 0px 0px 150px rgba(0, 0, 0, 0.15);
+    &:hover {
+      transform: scale(1.2);
+      box-shadow: 0px 0px 150px rgba(0, 0, 0, 0.25);
+    }
+    cursor: pointer;
   `,
-  HIDDEN: `
+  FOCUSED: `
+    z-index: 160;
+    opacity: 1;
+    position: absolute;
+    left: ${176 * Config.PX_SCALE_ARG}px;
+    top: ${41 * Config.PX_SCALE_ARG}px;
+    box-shadow: 0px 0px 150px rgba(0, 0, 0, 0);
+    cursor: normal;
+    &:hover {
+      transform: scale(1);
+      box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+    }
+  `,
+  HIDDEN_FOCUSED: `
     opacity: 0;
+    position: absolute;
+    left: ${176 * Config.PX_SCALE_ARG}px;
+    top: ${41 * Config.PX_SCALE_ARG}px;
   `
 });
 
-const Wrapper = styled.button`
-  z-index: 100;
-  position: absolute;
-  left: ${Config.WINDOW_WIDTH / 2 - wrapperSide / 2}px;
-  top: ${Config.WINDOW_HEIGHT / 2 - wrapperSide / 2}px;
+const WrapperButton = styled.button`
+  z-index: 160;
   opacity: 0;
+  background: #FFFFFF;
+  &:hover {
+    transform: scale(1.2);
+    box-shadow: 0px 0px 150px rgba(0, 0, 0, 0.25);
+  }
+  cursor: pointer;
   ${({ nextCSS }) => nextCSS};
   transition: all ${({ transitionTime }) => (transitionTime ? transitionTime / 1000 : 0.5)}s;
   width: ${wrapperSide}px;
@@ -145,14 +178,8 @@ const Wrapper = styled.button`
   align-items: center;
   justify-content: center;
   border-radius: ${wrapperSide / 2}px;
-  background: #FFFFFF;
   outline: none;
   border: none;
-  cursor: pointer;
-  &:hover {
-    transform: scale(1.2);
-    box-shadow: 0px 0px 150px rgba(0, 0, 0, 0.25);
-  }
 `;
 
 const iconSide = 56 * Config.PX_SCALE_ARG;

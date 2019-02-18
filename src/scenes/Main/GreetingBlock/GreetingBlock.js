@@ -121,6 +121,7 @@ const transitionStyles = {
     box-shadow: 0px 0px 250px rgba(0, 0, 0, 0);
   `,
   HIDDEN: `
+    opacity: 0;
     width: 0px;
     height: 0px;
     box-shadow: 0px 0px 250px rgba(0, 0, 0, 0);

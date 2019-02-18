@@ -35,6 +35,10 @@ export default class ButtonsTransferBlock extends Component {
         }
       });
 
+    hide = () => this.changeViewState('HIDDEN');
+
+    show = () => this.changeViewState('VISIBLE');
+
     toggleVisibility = () => {
       if (this.state.viewChangingState === CHANGING_STATE_FINISHED) {
         this.changeViewState(this.state.viewState === 'VISIBLE' ? 'HIDDEN' : 'VISIBLE');
@@ -48,6 +52,8 @@ export default class ButtonsTransferBlock extends Component {
     }
 
     moveLeft = () => this.changeViewState('DESTINATION_LEFT');
+
+    focus = () => this.changeViewState('FOCUSED');
 
     render() {
       const { viewState, transitionTime } = this.state;
