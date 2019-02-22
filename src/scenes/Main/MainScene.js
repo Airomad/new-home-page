@@ -38,7 +38,7 @@ export default class MainScene extends Component {
       if (this.pageContentRef) {
         this.pageContentRef.showPageContent();
       }
-    }, 2200);
+    }, 2000);
   }
 
   render() {

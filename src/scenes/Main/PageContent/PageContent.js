@@ -16,16 +16,11 @@ export default class MainScene extends ComponentWithTransitionStates {
   }
 
   showPageContent = () => {
-    this.changeViewState('TRANSIT')
+    this.changeViewState('NORMAL')
       .then(() => {
-        setTimeout(() => {
-          this.changeViewState('NORMAL', 600)
-            .then(() => {
-              if (this.headerRef) {
-                this.headerRef.show();
-              }
-            });
-        }, 1000);
+        if (this.headerRef) {
+          this.headerRef.show();
+        }
       });
   }
 
@@ -72,12 +67,7 @@ const wrapperNormalVerticalOffset = 30 * Config.PX_SCALE_ARG;
 const transitionStyles = {
   NORMAL: `
     opacity: 1;
-    left: ${wrapperNormalLeftOffset}px;
-    top: ${wrapperNormalVerticalOffset}px;
-    margin-bottom: ${wrapperNormalVerticalOffset}px;
-    width: ${Config.WINDOW_WIDTH - wrapperNormalLeftOffset - 26 * Config.PX_SCALE_ARG}px;
-    min-height: ${Config.WINDOW_HEIGHT - wrapperNormalVerticalOffset * 2}px;
-    border-radius: ${28 * Config.PX_SCALE_ARG}px;
+    transform: translateY(0);
   `,
   TRANSIT: `
     left: ${176 * Config.PX_SCALE_ARG}px;
@@ -89,11 +79,7 @@ const transitionStyles = {
   `,
   HIDDEN: `
     opacity: 0;
-    left: ${153 * Config.PX_SCALE_ARG}px;
-    top: ${15 * Config.PX_SCALE_ARG}px;
-    width: ${wrapperTransitSide}px;
-    height: ${wrapperTransitSide}px;
-    border-radius: ${wrapperTransitSide / 2}px;
+    transform: translateY(-20);
   `
 };
 
@@ -118,6 +104,12 @@ const InnerScrollRemover = styled.div`
 
 const ContentContainer = styled.div`
   min-height: auto;
+  left: ${wrapperNormalLeftOffset}px;
+  top: ${wrapperNormalVerticalOffset}px;
+  margin-bottom: ${wrapperNormalVerticalOffset}px;
+  width: ${Config.WINDOW_WIDTH - wrapperNormalLeftOffset - 26 * Config.PX_SCALE_ARG}px;
+  min-height: ${Config.WINDOW_HEIGHT - wrapperNormalVerticalOffset * 2}px;
+  border-radius: ${28 * Config.PX_SCALE_ARG}px;
   ${({ nextCSS }) => nextCSS};
   transition: all ${({ transitionTime }) => (transitionTime ? transitionTime / 1000 : 0.5)}s;
   display: flex;

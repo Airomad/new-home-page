@@ -77,6 +77,7 @@ const transitionStyles = {
   `,
   DESTINATION_LEFT: `
     left: ${28 * Config.PX_SCALE_ARG}px;
+    opacity: 0;
   `,
   HIDDEN: `
     opacity: 0;

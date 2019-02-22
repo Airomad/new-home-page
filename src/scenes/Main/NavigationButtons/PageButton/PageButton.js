@@ -71,6 +71,10 @@ export default class PageButton extends Component {
 
     moveToCenter = () => this.changeViewState('DESTINATION_CENTER', 1000);
 
+    moveToLeft = () => this.changeViewState('DESTINATION_LEFT_MIDDLE');
+
+    moveToVerticalLine = () => this.changeViewState('DESTINATION_VERTICAL_LINE');
+
     focus = () => this.changeViewState('FOCUSED');
 
     render() {
@@ -120,6 +124,20 @@ const POINTS_POS = [
   }
 ];
 
+const offsetVertical = 20 * Config.PX_SCALE_ARG;
+const wrapperSideSmall = (Config.WINDOW_HEIGHT - 100 - 120 * Config.PX_SCALE_ARG) / 6;
+const wrapperSmallXPos = (72 * Config.PX_SCALE_ARG) - wrapperSideSmall / 2;
+console.log(wrapperSideSmall, wrapperSmallXPos);
+const VERTICAL_Y_START = (Config.WINDOW_HEIGHT - (offsetVertical + wrapperSideSmall) * 6) / 2;
+const VERTICAL_LINE_POINTS_POS_Y = [
+  VERTICAL_Y_START,
+  VERTICAL_Y_START + wrapperSideSmall + offsetVertical,
+  VERTICAL_Y_START + (offsetVertical + wrapperSideSmall) * 2,
+  VERTICAL_Y_START + (offsetVertical + wrapperSideSmall) * 3,
+  VERTICAL_Y_START + (offsetVertical + wrapperSideSmall) * 4,
+  VERTICAL_Y_START + (offsetVertical + wrapperSideSmall) * 5,
+]
+
 const transitionStyles = circlePosition => ({
   DESTINATION_CENTER: `
     opacity: 0;
@@ -139,6 +157,25 @@ const transitionStyles = circlePosition => ({
       box-shadow: 0px 0px 150px rgba(0, 0, 0, 0.25);
     }
     cursor: pointer;
+  `,
+  DESTINATION_VERTICAL_LINE: `
+    opacity: 1;
+    position: absolute;
+    width: ${wrapperSideSmall}px;
+    height: ${wrapperSideSmall}px;
+    border-radius: ${wrapperSideSmall / 2}px;
+    left: ${wrapperSmallXPos}px;
+    top: ${VERTICAL_LINE_POINTS_POS_Y[circlePosition]}px;
+    box-shadow: 0px 0px 150px rgba(0, 0, 0, 0.15);
+  `,
+  DESTINATION_LEFT_MIDDLE: `
+    position: absolute;
+    opacity: 1;
+    width: ${wrapperSideSmall}px;
+    height: ${wrapperSideSmall}px;
+    border-radius: ${wrapperSideSmall / 2}px;
+    top: ${Config.WINDOW_HEIGHT / 2 - wrapperSideSmall / 2}px;
+    left: ${28 * Config.PX_SCALE_ARG}px;
   `,
   FOCUSED: `
     z-index: 160;
@@ -170,14 +207,16 @@ const WrapperButton = styled.button`
     box-shadow: 0px 0px 150px rgba(0, 0, 0, 0.25);
   }
   cursor: pointer;
-  ${({ nextCSS }) => nextCSS};
-  transition: all ${({ transitionTime }) => (transitionTime ? transitionTime / 1000 : 0.5)}s;
   width: ${wrapperSide}px;
   height: ${wrapperSide}px;
+  border-radius: ${wrapperSide / 2}px;
+  ${({ nextCSS }) => nextCSS};
+  transition: all ${({ transitionTime }) => (transitionTime ? transitionTime / 1000 : 0.5)}s;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: ${wrapperSide / 2}px;
+
   outline: none;
   border: none;
 `;

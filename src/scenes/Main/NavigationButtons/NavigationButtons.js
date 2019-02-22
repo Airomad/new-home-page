@@ -16,20 +16,21 @@ export default class NavigationButtons extends Component {
   // }
 
   openPageContent = (buttonId) => {
-    this.splitButtonsFromCenter();
+    // this.splitButtonsFromCenter();
     setTimeout(() => {
-      this.collectButtonsOnCenter(buttonId);
-      this.focusOnButton(buttonId);
-    }, 2000);
-    setTimeout(() => this.transferButtonsToLeft(), 4000);
+      this.collectButtonsOnCenter();
+      // this.focusOnButton();
+    }, 1000);
+    setTimeout(() => this.transferButtonsToLeft(), 2300);
+    setTimeout(() => this.splitButtonsVertical(), 3000);
   }
 
   splitButtonsFromCenter = (buttonIdExcept) => {
     setTimeout(() => {
       this.buttons.forEach(button => {
-        if (button.id !== buttonIdExcept) {
+        // if (button.id !== buttonIdExcept) {
           button.ref.moveToCircle();
-        }
+        // }
       });
       if (this.buttonsTransferRef) {
         this.buttonsTransferRef.hide();
@@ -40,9 +41,9 @@ export default class NavigationButtons extends Component {
   collectButtonsOnCenter = (buttonIdExcept) => {
     setTimeout(() => {
       this.buttons.forEach(button => {
-        if (button.id !== buttonIdExcept) {
+        // if (button.id !== buttonIdExcept) {
           button.ref.moveToCenter();
-        }
+        // }
       });
       if (this.buttonsTransferRef) {
         this.buttonsTransferRef.show();
@@ -50,18 +51,32 @@ export default class NavigationButtons extends Component {
     }, INIT_COLLECT_DELAY);
   }
 
+  splitButtonsVertical = (buttonIdExcept) => {
+    this.buttons.forEach(button => {
+      // if (button.id !== buttonIdExcept) {
+        button.ref.moveToVerticalLine();
+      // }
+    });
+    if (this.buttonsTransferRef) {
+      this.buttonsTransferRef.hide();
+    }
+  }
+
   transferButtonsToLeft = () => {
+    this.buttons.forEach(button => {
+      button.ref.moveToLeft();
+    });
     if (this.buttonsTransferRef) {
       this.buttonsTransferRef.moveLeft();
     }
   }
 
   focusOnButton = (buttonId) => {
-    const fb = this.buttons.filter(button => button.id === buttonId);
-    if (fb && fb[0]) {
-      fb[0].ref.focus();
-      // setTimeout(() => fb[0].ref.hideFocused(), 2800);
-    }
+    // const fb = this.buttons.filter(button => button.id === buttonId);
+    // if (fb && fb[0]) {
+    //   fb[0].ref.focus();
+    //   // setTimeout(() => fb[0].ref.hideFocused(), 2800);
+    // }
   }
 
   handleButtonClick = (buttonId) => {
