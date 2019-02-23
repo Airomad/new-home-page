@@ -4,6 +4,7 @@ import Config from 'config';
 import ComponentWithTransitionStates from 'components/ComponentWithTransitionStates';
 import BlockWithHidingTransition from './BlockWithHidingTransition';
 import ContactButton from './ContactButton';
+import theme from 'common/theme';
 
 import yoImgSrc from 'images/cool.svg';
 
@@ -12,7 +13,7 @@ export default class GreetingBlock extends ComponentWithTransitionStates {
     this.changeViewState('TRANSIT')
       .then(() => this.changeViewState('NORMAL')
         .then(this.showUpContent)
-    );
+      );
   }
 
   hide = () => {
@@ -20,7 +21,7 @@ export default class GreetingBlock extends ComponentWithTransitionStates {
     setTimeout(() => {
       this.changeViewState('TRANSIT')
         .then(() => this.changeViewState('HIDDEN'));
-    }, 1500);
+    }, 900);
   }
 
   showUpContent = () => {
@@ -55,7 +56,7 @@ export default class GreetingBlock extends ComponentWithTransitionStates {
           this.helloLineRef.hide();
         }
       },
-      1000
+      500
     );
     setTimeout(
       () => {
@@ -63,10 +64,10 @@ export default class GreetingBlock extends ComponentWithTransitionStates {
           this.yoImgRef.hide();
         }
       },
-      1100
+      510
     );
   }
-    
+
   render() {
     const { onContactClick } = this.props;
 
@@ -113,7 +114,7 @@ const transitionStyles = {
   NORMAL: `
     width: ${wrapperSideNormal}px;
     height: ${wrapperSideNormal}px;
-    box-shadow: 0px 0px 250px rgba(0, 0, 0, 0.14);
+    box-shadow: ${theme.greetingBlockShadow};
   `,
   TRANSIT: `
     width: ${wrapperSideTransit}px;
@@ -130,14 +131,14 @@ const transitionStyles = {
 
 const Wrapper = styled.div`
   z-index: 200;
-  box-shadow: 0px 0px 250px rgba(0, 0, 0, 0.14);
+  box-shadow: ${theme.greetingBlockShadow};
   ${({ nextCSS }) => nextCSS};
   transition: all ${({ transitionTime }) => (transitionTime ? transitionTime / 1000 : 0.5)}s;
   border-radius: ${wrapperSideNormal / 2}px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  background: #FFFFFF;
+  background: ${theme.bgMainColor};
   align-items: center;
 `;
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Config from 'config';
+import theme from 'common/theme';
 
 const DEFAULT_TRANSITION_TIME = 500;
 
@@ -8,63 +9,63 @@ const CHANGING_STATE_STARTED = 1;
 const CHANGING_STATE_FINISHED = 2;
 
 export default class ButtonsTransferBlock extends Component {
-    excludedStates = [];
+  excludedStates = [];
 
-    state = {
-      transitionTime: DEFAULT_TRANSITION_TIME,
-      viewState: 'VISIBLE',
-      viewChangingState: CHANGING_STATE_FINISHED
-    };
-  
-    changeViewState = (viewState, transitionTime = DEFAULT_TRANSITION_TIME) =>
-      new Promise((resolve, reject) => {
-        if (
-          this.state.viewState === viewState ||
-          this.state.viewChangingState === CHANGING_STATE_STARTED
-        ) {
-          reject();
-        } else {
-          this.setState(
-            { viewState, viewChangingState: CHANGING_STATE_STARTED, transitionTime },
-            () =>
-              setTimeout(
-                () => this.setState({ viewChangingState: CHANGING_STATE_FINISHED }, resolve),
-                transitionTime
-              )
-          );
-        }
-      });
+  state = {
+    transitionTime: DEFAULT_TRANSITION_TIME,
+    viewState: 'VISIBLE',
+    viewChangingState: CHANGING_STATE_FINISHED
+  };
 
-    hide = () => this.changeViewState('HIDDEN');
-
-    show = () => this.changeViewState('VISIBLE');
-
-    toggleVisibility = () => {
-      if (this.state.viewChangingState === CHANGING_STATE_FINISHED) {
-        this.changeViewState(this.state.viewState === 'VISIBLE' ? 'HIDDEN' : 'VISIBLE');
+  changeViewState = (viewState, transitionTime = DEFAULT_TRANSITION_TIME) =>
+    new Promise((resolve, reject) => {
+      if (
+        this.state.viewState === viewState ||
+        this.state.viewChangingState === CHANGING_STATE_STARTED
+      ) {
+        reject();
+      } else {
+        this.setState(
+          { viewState, viewChangingState: CHANGING_STATE_STARTED, transitionTime },
+          () =>
+            setTimeout(
+              () => this.setState({ viewChangingState: CHANGING_STATE_FINISHED }, resolve),
+              transitionTime
+            )
+        );
       }
+    });
+
+  hide = () => this.changeViewState('HIDDEN');
+
+  show = () => this.changeViewState('VISIBLE');
+
+  toggleVisibility = () => {
+    if (this.state.viewChangingState === CHANGING_STATE_FINISHED) {
+      this.changeViewState(this.state.viewState === 'VISIBLE' ? 'HIDDEN' : 'VISIBLE');
     }
+  }
 
-    togglePosition = () => {
-      if (this.state.viewChangingState === CHANGING_STATE_FINISHED) {
-        this.changeViewState(this.state.viewState === 'DESTINATION_RIGHT' ? 'DESTINATION_LEFT' : 'DESTINATION_RIGHT');
-      }
+  togglePosition = () => {
+    if (this.state.viewChangingState === CHANGING_STATE_FINISHED) {
+      this.changeViewState(this.state.viewState === 'DESTINATION_RIGHT' ? 'DESTINATION_LEFT' : 'DESTINATION_RIGHT');
     }
+  }
 
-    moveLeft = () => this.changeViewState('DESTINATION_LEFT');
+  moveLeft = () => this.changeViewState('DESTINATION_LEFT');
 
-    focus = () => this.changeViewState('FOCUSED');
+  focus = () => this.changeViewState('FOCUSED');
 
-    render() {
-      const { viewState, transitionTime } = this.state;
+  render() {
+    const { viewState, transitionTime } = this.state;
 
-      return (
-        <Wrapper
-          nextCSS={transitionStyles[viewState]}
-          transitionTime={transitionTime}
-        />
-      );
-    }
+    return (
+      <Wrapper
+        nextCSS={transitionStyles[viewState]}
+        transitionTime={transitionTime}
+      />
+    );
+  }
 }
 
 const wrapperSide = 100 * Config.PX_SCALE_ARG;
@@ -94,6 +95,6 @@ const Wrapper = styled.div`
   display: block;
   top: ${Config.WINDOW_HEIGHT / 2 - wrapperSide / 2}px;
   border-radius: ${wrapperSide / 2}px;
-  background: #FFFFFF;
+  background: ${theme.bgMainColor};
   box-shadow: 0px 0px 150px rgba(0, 0, 0, 0.15);
 `;

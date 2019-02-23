@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import theme from 'common/theme';
 
 import ButtonsTransferBlock from './ButtonsTransferBlock';
 import PageButton from './PageButton';
@@ -12,7 +13,7 @@ export default class NavigationButtons extends Component {
   buttons = [];
 
   // componentDidMount() {
-    
+
   // }
 
   openPageContent = (buttonId) => {
@@ -29,7 +30,7 @@ export default class NavigationButtons extends Component {
     setTimeout(() => {
       this.buttons.forEach(button => {
         // if (button.id !== buttonIdExcept) {
-          button.ref.moveToCircle();
+        button.ref.moveToCircle();
         // }
       });
       if (this.buttonsTransferRef) {
@@ -41,8 +42,9 @@ export default class NavigationButtons extends Component {
   collectButtonsOnCenter = (buttonIdExcept) => {
     setTimeout(() => {
       this.buttons.forEach(button => {
+        console.log(button);
         // if (button.id !== buttonIdExcept) {
-          button.ref.moveToCenter();
+        button.ref.moveToCenter();
         // }
       });
       if (this.buttonsTransferRef) {
@@ -54,7 +56,7 @@ export default class NavigationButtons extends Component {
   splitButtonsVertical = (buttonIdExcept) => {
     this.buttons.forEach(button => {
       // if (button.id !== buttonIdExcept) {
-        button.ref.moveToVerticalLine();
+      button.ref.moveToVerticalLine();
       // }
     });
     if (this.buttonsTransferRef) {
@@ -93,11 +95,11 @@ export default class NavigationButtons extends Component {
     //   INIT_DELAY_HIDE // 1200
     // );
 
-    
+
     //   if (this.greetingBlockRef) {
     //     this.greetingBlockRef.hide();
     //   }
-  
+
     //   // setTimeout(() => {
     //   //   if (this.buttonsTransferRef) {
     //   //     this.buttonsTransferRef.toggleVisibility();
@@ -108,12 +110,22 @@ export default class NavigationButtons extends Component {
     //       this.buttonsTransferRef.moveLeft();
     //     }
     //   }, INIT_DELAY_HIDE + 1400);
-    
+
+  }
+
+  onButtonRef = (id, ref) => {
+    const f = this.buttons.filter(btn => btn.id === id);
+    if (f && f.length > 0) {
+      return;
+    }
+    this.buttons.push({
+      id,
+      ref
+    });
+    console.log(this.buttons);
   }
 
   render() {
-    this.buttons = [];
-
     return (
       <Wrapper>
         <ButtonsTransferBlock
@@ -124,62 +136,32 @@ export default class NavigationButtons extends Component {
         <PageButton
           circlePosition={0}
           onClick={this.handleButtonClick}
-          ref={ref => {
-            this.buttons.push({
-              id: 0,
-              ref
-            })
-          }}
+          ref={ref => this.onButtonRef(0, ref)}
         />
         <PageButton
           circlePosition={1}
           onClick={this.handleButtonClick}
-          ref={ref => {
-            this.buttons.push({
-              id: 1,
-              ref
-            })
-          }}
+          ref={ref => this.onButtonRef(1, ref)}
         />
         <PageButton
           circlePosition={2}
           onClick={this.handleButtonClick}
-          ref={ref => {
-            this.buttons.push({
-              id: 2,
-              ref
-            })
-          }}
+          ref={ref => this.onButtonRef(2, ref)}
         />
         <PageButton
           circlePosition={3}
           onClick={this.handleButtonClick}
-          ref={ref => {
-            this.buttons.push({
-              id: 3,
-              ref
-            })
-          }}
+          ref={ref => this.onButtonRef(3, ref)}
         />
         <PageButton
           circlePosition={4}
           onClick={this.handleButtonClick}
-          ref={ref => {
-            this.buttons.push({
-              id: 4,
-              ref
-            })
-          }}
+          ref={ref => this.onButtonRef(4, ref)}
         />
         <PageButton
           circlePosition={5}
           onClick={this.handleButtonClick}
-          ref={ref => {
-            this.buttons.push({
-              id: 5,
-              ref
-            })
-          }}
+          ref={ref => this.onButtonRef(5, ref)}
         />
       </Wrapper>
     );
@@ -193,7 +175,7 @@ const Wrapper = styled.div`
   right: 0px;
   bottom: 0px;
   display: flex;
-  background-color: #fff;
+  background-color: ${theme.bgMainColor};
   flex: 1;
   justify-content: center;
   align-items: center;

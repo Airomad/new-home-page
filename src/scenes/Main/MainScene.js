@@ -4,11 +4,17 @@ import styled from 'styled-components';
 import GreetingBlock from './GreetingBlock';
 import NavigationButtons from './NavigationButtons';
 import PageContent from './PageContent';
+import theme from 'common/theme';
 
 export default class MainScene extends Component {
   buttonsRef = [];
 
+  state = {
+    isReady: false,
+  };
+
   componentDidMount() {
+    // this.pageContentRef.showPageContent();
     setTimeout(() => {
       if (this.greetingBlockRef) {
         this.greetingBlockRef.show();
@@ -20,6 +26,8 @@ export default class MainScene extends Component {
         this.navigationButtonsRef.splitButtonsFromCenter();
       }
     }, 2500);
+
+    setTimeout(() => this.setState({ isReady: true }), 5000);
   }
 
   handleContactClick = () => {
@@ -27,18 +35,24 @@ export default class MainScene extends Component {
   }
 
   handleButtonClick = (buttonId) => {
+    // if (this.state.isReady) {
+    if (this.navigationButtonsRef) {
+      this.navigationButtonsRef.collectButtonsOnCenter();
+    }
+    // setTimeout(() => {
+
+    // }, 1000);
     if (this.greetingBlockRef) {
       this.greetingBlockRef.hide();
     }
-    if (this.navigationButtonsRef) {
-      this.navigationButtonsRef.openPageContent(buttonId);
-    }
 
-    setTimeout(() => {
-      if (this.pageContentRef) {
-        this.pageContentRef.showPageContent();
-      }
-    }, 2000);
+    // }
+
+    // setTimeout(() => {
+    //   if (this.pageContentRef) {
+    //     this.pageContentRef.showPageContent();
+    //   }
+    // }, 2000);
   }
 
   render() {
@@ -64,7 +78,7 @@ export default class MainScene extends Component {
 
 const Wrapper = styled.div`
   display: flex;
-  background-color: #fff;
+  background-color: ${theme.bgMainColor};
   flex: 1;
   justify-content: center;
   align-items: center;

@@ -32,8 +32,8 @@ export default class MainScene extends ComponentWithTransitionStates {
             nextCSS={transitionStyles[this.getViewState()]}
             transitionTime={this.getTransitionTime()}
           >
-            <PageHeader ref={ref => this.headerRef = ref } />
-          {/* {this.isTransitionFinished() && <div>
+            <PageHeader ref={ref => this.headerRef = ref} />
+            {/* {this.isTransitionFinished() && <div>
             sdfsdfsdf sdf<br/>
        sdfsdfsdf sdf<br/>
        sdfsdfsdf sdf<br/>
@@ -54,8 +54,8 @@ export default class MainScene extends ComponentWithTransitionStates {
        sdfsdfsdf sdf<br/>
        sdfsdfsdf sdf<br/>
           </div>} */}
-        </ContentContainer>
-       </InnerScrollRemover>
+          </ContentContainer>
+        </InnerScrollRemover>
       </Wrapper>
     );
   }

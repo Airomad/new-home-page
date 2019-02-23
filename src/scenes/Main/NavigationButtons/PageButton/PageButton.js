@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Config from 'config';
+import theme from 'common/theme';
 
 import portfolioImgSrc from 'images/portfolio.svg';
 import liveImgSrc from 'images/live.svg';
@@ -24,73 +25,73 @@ const iconSet = [
 ];
 
 export default class PageButton extends Component {
-    excludedStates = [];
+  excludedStates = [];
 
-    state = {
-      transitionTime: DEFAULT_TRANSITION_TIME,
-      viewState: 'DESTINATION_CENTER',
-      viewChangingState: CHANGING_STATE_FINISHED
-    };
-  
-    changeViewState = (viewState, transitionTime = DEFAULT_TRANSITION_TIME) =>
-      new Promise((resolve, reject) => {
-        if (
-          this.state.viewState === viewState ||
-          this.state.viewChangingState === CHANGING_STATE_STARTED
-        ) {
-          reject();
-        } else {
-          this.setState(
-            { viewState, viewChangingState: CHANGING_STATE_STARTED, transitionTime },
-            () =>
-              setTimeout(
-                () => this.setState({ viewChangingState: CHANGING_STATE_FINISHED }, resolve),
-                transitionTime
-              )
-          );
-        }
-      });
+  state = {
+    transitionTime: DEFAULT_TRANSITION_TIME,
+    viewState: 'DESTINATION_CENTER',
+    viewChangingState: CHANGING_STATE_FINISHED
+  };
 
-    toggleVisibility = () => {
-      if (this.state.viewChangingState === CHANGING_STATE_FINISHED) {
-        this.changeViewState(this.state.viewState === 'VISIBLE' ? 'HIDDEN' : 'VISIBLE');
+  changeViewState = (viewState, transitionTime = DEFAULT_TRANSITION_TIME) =>
+    new Promise((resolve, reject) => {
+      if (
+        this.state.viewState === viewState ||
+        this.state.viewChangingState === CHANGING_STATE_STARTED
+      ) {
+        reject();
+      } else {
+        this.setState(
+          { viewState, viewChangingState: CHANGING_STATE_STARTED, transitionTime },
+          () =>
+            setTimeout(
+              () => this.setState({ viewChangingState: CHANGING_STATE_FINISHED }, resolve),
+              transitionTime
+            )
+        );
       }
+    });
+
+  toggleVisibility = () => {
+    if (this.state.viewChangingState === CHANGING_STATE_FINISHED) {
+      this.changeViewState(this.state.viewState === 'VISIBLE' ? 'HIDDEN' : 'VISIBLE');
     }
+  }
 
-    togglePosition = () => {
-      if (this.state.viewChangingState === CHANGING_STATE_FINISHED) {
-        this.changeViewState(this.state.viewState === 'DESTINATION_RIGHT' ? 'DESTINATION_LEFT' : 'DESTINATION_RIGHT');
-      }
+  togglePosition = () => {
+    if (this.state.viewChangingState === CHANGING_STATE_FINISHED) {
+      this.changeViewState(this.state.viewState === 'DESTINATION_RIGHT' ? 'DESTINATION_LEFT' : 'DESTINATION_RIGHT');
     }
+  }
 
-    hide = () => this.changeViewState('HIDDEN');
+  hide = () => this.changeViewState('HIDDEN');
 
-    hideFocused = () => this.changeViewState('HIDDEN_FOCUSED');
+  hideFocused = () => this.changeViewState('HIDDEN_FOCUSED');
 
-    moveToCircle = () => this.changeViewState('DESTINATION_CIRCLE', 1000);
+  moveToCircle = () => this.changeViewState('DESTINATION_CIRCLE', 1000);
 
-    moveToCenter = () => this.changeViewState('DESTINATION_CENTER', 1000);
+  moveToCenter = () => this.changeViewState('DESTINATION_CENTER', 1000);
 
-    moveToLeft = () => this.changeViewState('DESTINATION_LEFT_MIDDLE');
+  moveToLeft = () => this.changeViewState('DESTINATION_LEFT_MIDDLE');
 
-    moveToVerticalLine = () => this.changeViewState('DESTINATION_VERTICAL_LINE');
+  moveToVerticalLine = () => this.changeViewState('DESTINATION_VERTICAL_LINE');
 
-    focus = () => this.changeViewState('FOCUSED');
+  focus = () => this.changeViewState('FOCUSED');
 
-    render() {
-      const { viewState, transitionTime } = this.state;
-      const { circlePosition, onClick } = this.props;
+  render() {
+    const { viewState, transitionTime } = this.state;
+    const { circlePosition, onClick } = this.props;
 
-      return (
-        <WrapperButton
-          onClick={() => viewState === 'DESTINATION_CIRCLE' ? onClick(circlePosition) : null}
-          nextCSS={transitionStyles(circlePosition)[viewState]}
-          transitionTime={transitionTime}
-        >
-          <IconContainer icon={iconSet[circlePosition]} />
-        </WrapperButton>
-      );
-    }
+    return (
+      <WrapperButton
+        onClick={() => viewState === 'DESTINATION_CIRCLE' ? onClick(circlePosition) : null}
+        nextCSS={transitionStyles(circlePosition)[viewState]}
+        transitionTime={transitionTime}
+      >
+        <IconContainer icon={iconSet[circlePosition]} />
+      </WrapperButton>
+    );
+  }
 }
 
 const wrapperSide = 100 * Config.PX_SCALE_ARG;
@@ -125,9 +126,8 @@ const POINTS_POS = [
 ];
 
 const offsetVertical = 20 * Config.PX_SCALE_ARG;
-const wrapperSideSmall = (Config.WINDOW_HEIGHT - 100 - 120 * Config.PX_SCALE_ARG) / 6;
+const wrapperSideSmall = (Config.WINDOW_HEIGHT - 200 - 120 * Config.PX_SCALE_ARG) / 6;
 const wrapperSmallXPos = (72 * Config.PX_SCALE_ARG) - wrapperSideSmall / 2;
-console.log(wrapperSideSmall, wrapperSmallXPos);
 const VERTICAL_Y_START = (Config.WINDOW_HEIGHT - (offsetVertical + wrapperSideSmall) * 6) / 2;
 const VERTICAL_LINE_POINTS_POS_Y = [
   VERTICAL_Y_START,
@@ -151,7 +151,7 @@ const transitionStyles = circlePosition => ({
     position: absolute;
     left: ${POINTS_POS[circlePosition].x}px;
     top: ${POINTS_POS[circlePosition].y}px;
-    box-shadow: 0px 0px 150px rgba(0, 0, 0, 0.15);
+    box-shadow: ${theme.pageButtonShadow};
     &:hover {
       transform: scale(1.2);
       box-shadow: 0px 0px 150px rgba(0, 0, 0, 0.25);
@@ -166,7 +166,7 @@ const transitionStyles = circlePosition => ({
     border-radius: ${wrapperSideSmall / 2}px;
     left: ${wrapperSmallXPos}px;
     top: ${VERTICAL_LINE_POINTS_POS_Y[circlePosition]}px;
-    box-shadow: 0px 0px 150px rgba(0, 0, 0, 0.15);
+    box-shadow: ${theme.pageButtonShadow};
   `,
   DESTINATION_LEFT_MIDDLE: `
     position: absolute;
@@ -201,7 +201,6 @@ const transitionStyles = circlePosition => ({
 const WrapperButton = styled.button`
   z-index: 160;
   opacity: 0;
-  background: #FFFFFF;
   &:hover {
     transform: scale(1.2);
     box-shadow: 0px 0px 150px rgba(0, 0, 0, 0.25);
@@ -212,11 +211,10 @@ const WrapperButton = styled.button`
   border-radius: ${wrapperSide / 2}px;
   ${({ nextCSS }) => nextCSS};
   transition: all ${({ transitionTime }) => (transitionTime ? transitionTime / 1000 : 0.5)}s;
-
+  background: ${theme.bgMainColor};
   display: flex;
   align-items: center;
   justify-content: center;
-
   outline: none;
   border: none;
 `;

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Config from 'config';
 import ComponentWithTransitionStates from 'components/ComponentWithTransitionStates';
-
+import closeIconSrc from './close-icon.svg';
 
 export default class PageHeader extends ComponentWithTransitionStates {
   constructor(props) {
@@ -16,8 +16,11 @@ export default class PageHeader extends ComponentWithTransitionStates {
         nextCSS={transitionStyles[this.getViewState()]}
         transitionTime={this.getTransitionTime()}
       >
-        
-        <TitleLabel>My Portfolio</TitleLabel>
+        <ContentContainer>
+          <TitleLabel>My Portfolio</TitleLabel>
+          <CloseButton />
+        </ContentContainer>
+        <Underline />
       </Wrapper>
     );
   }
@@ -40,19 +43,55 @@ const Wrapper = styled.div`
   right: 0px;
   top: 0px;
   z-index: 300;
-  height: ${118 * Config.PX_SCALE_ARG}px;
+  height: ${70 * Config.PX_SCALE_ARG}px;
   display: flex;
   flex-direction: row;
   align-items: center;
+  flex-direction: column;
+  align-items: stretch;
+`;
+
+const ContentContainer = styled.div`
+  display: flex;
+  flex: 1;
+  align-items: center;
+  flex-direction: row;
+  margin-left: ${50 * Config.PX_SCALE_ARG}px;
+  margin-right: ${50 * Config.PX_SCALE_ARG}px;
 `;
 
 const TitleLabel = styled.div`
+  display: flex;
+  flex: 1;
   font-family: Quicksand;
   font-style: normal;
   font-weight: 300;
   line-height: normal;
-  font-size: 30px;
-  text-align: center;
+  font-size: ${30 * Config.PX_SCALE_ARG}px;
+  text-align: left;
   color: #000000;
-  margin-left: ${136 * Config.PX_SCALE_ARG}px;
+`;
+
+const Underline = styled.div`
+  width: 100%;
+  height: 1px;
+  background-color: #ECECEC;
+`;
+
+const CloseButton = styled.button`
+  display: block;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  width: ${16 * Config.PX_SCALE_ARG}px;
+  height: ${16 * Config.PX_SCALE_ARG}px;
+  background-image: url(${closeIconSrc});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: 0.3;
+  &:hover {
+    opacity: 1;
+  }
+  transition: 0.5s;
 `;

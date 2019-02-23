@@ -33,6 +33,7 @@ module.exports = {
       scenes: `${defaultSettings.srcPath}/scenes/`,
       images: `${defaultSettings.srcPath}/images/`,
       store: `${defaultSettings.srcPath}/store/`,
+      common: `${defaultSettings.srcPath}/common/`,
       config: `${defaultSettings.srcPath}/config/${process.env.REACT_WEBPACK_ENV}`,
       'react/lib/ReactMount': 'react-dom/lib/ReactMount'
     }
