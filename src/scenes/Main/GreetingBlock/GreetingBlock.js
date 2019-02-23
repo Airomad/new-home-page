@@ -161,14 +161,14 @@ const HelloLabel = styled.div`
   line-height: normal;
   font-size: ${35 * Config.PX_SCALE_ARG}px;
   text-align: center;
-  color: #000000;
+  color: ${theme.textMainColor};
   margin-top: ${54 * Config.PX_SCALE_ARG}px;
   margin-bottom: ${64 * Config.PX_SCALE_ARG}px;
 `;
 
 const ProfLabel = styled.span`
   font-weight: 500;
-  color: #3F9B06;
+  color: ${theme.textHighlightColor};
 `;
 
 const FromLabel = styled.span`

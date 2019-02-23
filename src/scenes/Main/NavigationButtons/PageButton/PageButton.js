@@ -3,26 +3,27 @@ import styled from 'styled-components';
 import Config from 'config';
 import theme from 'common/theme';
 
-import portfolioImgSrc from 'images/portfolio.svg';
-import liveImgSrc from 'images/live.svg';
-import aboutImgSrc from 'images/about.svg';
-import cvImgSrc from 'images/cv.svg';
-import mailImgSrc from 'images/mail.svg';
-import settingsImgSrc from 'images/settings.svg';
+// import portfolioImgSrc from 'images/portfolio.svg';
+// import liveImgSrc from 'images/live.svg';
+// import aboutImgSrc from 'images/about.svg';
+// import cvImgSrc from 'images/cv.svg';
+// import mailImgSrc from 'images/mail.svg';
+// import settingsImgSrc from 'images/settings.svg';
+import Icon from './Icon';
 
 const DEFAULT_TRANSITION_TIME = 500;
 
 const CHANGING_STATE_STARTED = 1;
 const CHANGING_STATE_FINISHED = 2;
 
-const iconSet = [
-  portfolioImgSrc,
-  liveImgSrc,
-  cvImgSrc,
-  settingsImgSrc,
-  mailImgSrc,
-  aboutImgSrc
-];
+// const iconSet = [
+//   portfolioImgSrc,
+//   liveImgSrc,
+//   cvImgSrc,
+//   settingsImgSrc,
+//   mailImgSrc,
+//   aboutImgSrc
+// ];
 
 export default class PageButton extends Component {
   excludedStates = [];
@@ -88,7 +89,8 @@ export default class PageButton extends Component {
         nextCSS={transitionStyles(circlePosition)[viewState]}
         transitionTime={transitionTime}
       >
-        <IconContainer icon={iconSet[circlePosition]} />
+        {/* <IconContainer icon={iconSet[circlePosition]} /> */}
+        <Icon color={theme.pageButtonIconColor} />
       </WrapperButton>
     );
   }

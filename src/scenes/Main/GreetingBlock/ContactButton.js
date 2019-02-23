@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import Config from 'config';
+import theme from 'common/theme';
+
 import ComponentWithTransitionStates from 'components/ComponentWithTransitionStates';
 
 export default class ContactButton extends ComponentWithTransitionStates {
@@ -49,10 +51,10 @@ const WrapperButton = styled.button`
   line-height: normal;
   font-size: ${25 * Config.PX_SCALE_ARG}px;
   text-align: center;
-  color: #3f9b06;
+  color: ${theme.textHighlightColor};
   background-color: transparent;
   border-radius: 999px;
-  border: ${2.5 * Config.PX_SCALE_ARG}px solid #3f9b06;
+  border: ${2.5 * Config.PX_SCALE_ARG}px solid ${theme.textHighlightColor};
   outline: none;
   cursor: pointer;
   padding: 0px;
@@ -60,7 +62,7 @@ const WrapperButton = styled.button`
   justify-content: center;
   align-items: center;
   &:hover {
-    background-color: #3f9b06;
-    color: #ffffff;
+    background-color: ${theme.textHighlightColor};
+    color: ${theme.bgMainColor};
   }
 `;
