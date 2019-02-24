@@ -16,14 +16,7 @@ const DEFAULT_TRANSITION_TIME = 500;
 const CHANGING_STATE_STARTED = 1;
 const CHANGING_STATE_FINISHED = 2;
 
-// const iconSet = [
-//   portfolioImgSrc,
-//   liveImgSrc,
-//   cvImgSrc,
-//   settingsImgSrc,
-//   mailImgSrc,
-//   aboutImgSrc
-// ];
+const pages = ['portfolio', 'about', 'cv', 'settings', 'contacts', 'feed'];
 
 export default class PageButton extends Component {
   excludedStates = [];
@@ -90,7 +83,7 @@ export default class PageButton extends Component {
         transitionTime={transitionTime}
       >
         {/* <IconContainer icon={iconSet[circlePosition]} /> */}
-        <Icon color={theme.pageButtonIconColor} />
+        <Icon color={theme.pageButtonIconColor} page={pages[circlePosition]} />
       </WrapperButton>
     );
   }
