@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import GreetingBlock from './GreetingBlock';
-import NavigationButtons from './NavigationButtons';
+import NavigationButtons from 'components/NavigationButtons';
 import PageContent from './PageContent';
 import theme from 'common/theme';
 

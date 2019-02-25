@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import Config from 'config';
+import theme from 'common/theme';
 import ComponentWithTransitionStates from 'components/ComponentWithTransitionStates';
-import img from 'images/cool.svg';
 
 export default class YoImage extends ComponentWithTransitionStates {
   constructor(props) {
@@ -11,6 +11,8 @@ export default class YoImage extends ComponentWithTransitionStates {
   }
 
   render() {
+    const color = theme.pageButtonIconColor;
+
     return (
       <WrapperImage
         nextCSS={transitionStyles[this.getViewState()]}
@@ -24,7 +26,7 @@ export default class YoImage extends ComponentWithTransitionStates {
           </g>
           <defs>
             <clipPath id="clip0">
-              <rect width="76" height="76" fill="white" />
+              <rect width="76" height="76" fill={color} />
             </clipPath>
           </defs>
         </svg>
@@ -56,4 +58,5 @@ const WrapperImage = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
+  margin-top: ${85 * Config.PX_SCALE_ARG}px;
 `;

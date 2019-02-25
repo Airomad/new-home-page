@@ -6,7 +6,7 @@ import BlockWithHidingTransition from './BlockWithHidingTransition';
 import ContactButton from './ContactButton';
 import theme from 'common/theme';
 
-import yoImgSrc from 'images/cool.svg';
+import YoImage from './YoImage';
 
 export default class GreetingBlock extends ComponentWithTransitionStates {
   show = () => {
@@ -76,13 +76,11 @@ export default class GreetingBlock extends ComponentWithTransitionStates {
         nextCSS={transitionStyles[this.getViewState()]}
         transitionTime={this.getTransitionTime()}
       >
-        <BlockWithHidingTransition
-          ref={ref => {
-            this.yoImgRef = ref;
-          }}
-        >
-          <YoImage />
-        </BlockWithHidingTransition>
+          <YoImage
+            ref={ref => {
+              this.yoImgRef = ref;
+            }}
+          />
         <BlockWithHidingTransition
           ref={ref => {
             this.helloLineRef = ref;
@@ -140,18 +138,6 @@ const Wrapper = styled.div`
   justify-content: flex-start;
   background: ${theme.bgMainColor};
   align-items: center;
-`;
-
-const yoImageSide = 75 * Config.PX_SCALE_ARG;
-const YoImage = styled.div`
-  width: ${yoImageSide}px;
-  height: ${yoImageSide}px;
-  display: block;
-  background-image: url(${yoImgSrc});
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  margin-top: ${85 * Config.PX_SCALE_ARG}px;
 `;
 
 const HelloLabel = styled.div`

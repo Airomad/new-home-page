@@ -105,7 +105,9 @@ export default function Icon({ page, color }) {
   );
 }
 
-const wrapperSide = 56 * Config.PX_SCALE_ARG;
+
+const wrapperSideSmall = (Config.WINDOW_HEIGHT - 200 - 120 * Config.PX_SCALE_ARG) / 6;
+const wrapperSide = wrapperSideSmall * 0.5;
 const Wrapper = styled.div`
   width: ${wrapperSide}px;
   height: ${wrapperSide}px;

@@ -74,7 +74,7 @@ export default class PageButton extends Component {
 
   render() {
     const { viewState, transitionTime } = this.state;
-    const { circlePosition, onClick } = this.props;
+    const { circlePosition, onClick, active } = this.props;
 
     return (
       <WrapperButton
@@ -83,7 +83,7 @@ export default class PageButton extends Component {
         transitionTime={transitionTime}
       >
         {/* <IconContainer icon={iconSet[circlePosition]} /> */}
-        <Icon color={theme.pageButtonIconColor} page={pages[circlePosition]} />
+        <Icon color={active ? theme.textHighlightColor : theme.pageButtonIconColor} page={pages[circlePosition]} />
       </WrapperButton>
     );
   }
@@ -165,12 +165,12 @@ const transitionStyles = circlePosition => ({
   `,
   DESTINATION_LEFT_MIDDLE: `
     position: absolute;
-    opacity: 1;
+    opacity: 0;
     width: ${wrapperSideSmall}px;
     height: ${wrapperSideSmall}px;
     border-radius: ${wrapperSideSmall / 2}px;
     top: ${Config.WINDOW_HEIGHT / 2 - wrapperSideSmall / 2}px;
-    left: ${28 * Config.PX_SCALE_ARG}px;
+    left: ${wrapperSmallXPos}px;
   `,
   FOCUSED: `
     z-index: 160;

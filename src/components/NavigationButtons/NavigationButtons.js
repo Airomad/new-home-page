@@ -2,36 +2,37 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import theme from 'common/theme';
 
-import ButtonsTransferBlock from './ButtonsTransferBlock';
 import PageButton from './PageButton';
 
 const INIT_SPLIT_DELAY = 0; // 2400
 const INIT_COLLECT_DELAY = 0;
-const INIT_DELAY_HIDE = 0;
 
 export default class NavigationButtons extends Component {
   buttons = [];
 
-  // componentDidMount() {
 
-  // }
+  setInitOriginPosition = (position = 'center') => {
+    this.buttons.forEach(button => {
+      if (position === 'center') {
+        button.ref.moveToCenter();
+      } else if (position === 'left') {
+        button.ref.moveToLeft();
+      }
+    });
+  }
 
-  openPageContent = (buttonId) => {
-    // this.splitButtonsFromCenter();
+  openPageContent = () => {
     setTimeout(() => {
       this.collectButtonsOnCenter();
-      // this.focusOnButton();
     }, 1000);
     setTimeout(() => this.transferButtonsToLeft(), 2300);
     setTimeout(() => this.splitButtonsVertical(), 3000);
   }
 
-  splitButtonsFromCenter = (buttonIdExcept) => {
+  splitButtonsFromCenter = () => {
     setTimeout(() => {
       this.buttons.forEach(button => {
-        // if (button.id !== buttonIdExcept) {
         button.ref.moveToCircle();
-        // }
       });
       if (this.buttonsTransferRef) {
         this.buttonsTransferRef.hide();
@@ -42,10 +43,7 @@ export default class NavigationButtons extends Component {
   collectButtonsOnCenter = (buttonIdExcept) => {
     setTimeout(() => {
       this.buttons.forEach(button => {
-        console.log(button);
-        // if (button.id !== buttonIdExcept) {
         button.ref.moveToCenter();
-        // }
       });
       if (this.buttonsTransferRef) {
         this.buttonsTransferRef.show();
@@ -53,11 +51,9 @@ export default class NavigationButtons extends Component {
     }, INIT_COLLECT_DELAY);
   }
 
-  splitButtonsVertical = (buttonIdExcept) => {
+  splitButtonsVertical = () => {
     this.buttons.forEach(button => {
-      // if (button.id !== buttonIdExcept) {
       button.ref.moveToVerticalLine();
-      // }
     });
     if (this.buttonsTransferRef) {
       this.buttonsTransferRef.hide();
@@ -73,44 +69,9 @@ export default class NavigationButtons extends Component {
     }
   }
 
-  focusOnButton = (buttonId) => {
-    // const fb = this.buttons.filter(button => button.id === buttonId);
-    // if (fb && fb[0]) {
-    //   fb[0].ref.focus();
-    //   // setTimeout(() => fb[0].ref.hideFocused(), 2800);
-    // }
-  }
-
   handleButtonClick = (buttonId) => {
     const { onButtonClick } = this.props;
     onButtonClick(buttonId);
-  }
-
-  handleContactClick = () => {
-    // this.buttonsRef.forEach(node => node.moveToCenter());
-    // setTimeout(
-    //   () => {
-    //     this.buttonsRef.forEach(node => node.hide());
-    //   },
-    //   INIT_DELAY_HIDE // 1200
-    // );
-
-
-    //   if (this.greetingBlockRef) {
-    //     this.greetingBlockRef.hide();
-    //   }
-
-    //   // setTimeout(() => {
-    //   //   if (this.buttonsTransferRef) {
-    //   //     this.buttonsTransferRef.toggleVisibility();
-    //   //   }
-    //   // }, 1500);
-    //   setTimeout(() => {
-    //     if (this.buttonsTransferRef) {
-    //       this.buttonsTransferRef.moveLeft();
-    //     }
-    //   }, INIT_DELAY_HIDE + 1400);
-
   }
 
   onButtonRef = (id, ref) => {
@@ -122,21 +83,16 @@ export default class NavigationButtons extends Component {
       id,
       ref
     });
-    console.log(this.buttons);
   }
 
   render() {
     return (
       <Wrapper>
-        <ButtonsTransferBlock
-          ref={ref => {
-            this.buttonsTransferRef = ref;
-          }}
-        />
         <PageButton
           circlePosition={0}
           onClick={this.handleButtonClick}
           ref={ref => this.onButtonRef(0, ref)}
+          active
         />
         <PageButton
           circlePosition={1}
